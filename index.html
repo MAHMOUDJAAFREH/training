@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروط التدرب - مستشفى الجامعة الأردنية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* تعريف تأثير الوميض لمرة واحدة */
+        @keyframes pulse-once {
+            0% { transform: scale(1); opacity: 1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.01); opacity: 0.9; box-shadow: 0 8px 12px -2px rgba(37, 99, 235, 0.5); }
+            100% { transform: scale(1); opacity: 1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        }
+        .animate-pulse-once {
+            animation: pulse-once 0.4s ease-out;
+        }
+        /* تم إلغاء تثبيت الهيدر بإلغاء فئة sticky-header هنا */
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- شاشة البداية لاختيار الفئة (أكثر جمالية وتجاوباً) -->
+    <div id="welcome-screen" class="fixed inset-0 bg-gradient-to-br from-blue-900 to-blue-700 bg-opacity-95 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-12 max-w-xl w-full text-center transform transition-transform duration-500 scale-100 border-b-8 border-yellow-400">
+            
+            <div class="text-3xl md:text-4xl mb-4 text-blue-600 font-extrabold">مستشفى الجامعة الأردنية</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 border-b pb-3">بوابة المتدربين</h2>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 font-semibold">
+                للاطلاع على المتطلبات الصحيحة، يرجى تحديد صفة انتسابك للتدريب:
+            </p>
+            
+            <div class="space-y-4 md:space-y-6">
+                
+                <!-- زر الجامعة الأردنية -->
+                <button onclick="setTraineeType(true)" class="w-full flex flex-col sm:flex-row items-center justify-center px-4 py-3 sm:py-4 bg-blue-500 text-white text-lg md:text-xl font-bold rounded-xl shadow-lg hover:bg-blue-600 transition duration-300 transform hover:scale-[1.03] border-b-4 border-blue-800">
+                    <span class="text-2xl sm:ml-3 mb-2 sm:mb-0">🎓</span> أنا متدرب من الجامعة الأردنية
+                </button>
+                
+                <!-- زر الجهة الخارجية/الخاص/الاستشارات/الجامعة الأردنية (ملزم بالامتحان) -->
+                <button onclick="setTraineeType(false)" class="w-full flex flex-col sm:flex-row items-center justify-center px-4 py-3 sm:py-4 bg-green-500 text-white text-lg md:text-xl font-bold rounded-xl shadow-lg hover:bg-green-600 transition duration-300 transform hover:scale-[1.03] border-b-4 border-green-800">
+                    <span class="text-2xl sm:ml-3 mb-2 sm:mb-0">💼</span> أنا متدرب من جهة خارجية / خاص / مركز الاستشارات الجامعة الأردنية (ملزم بالامتحان)
+                </button>
+            </div>
+            
+            <p class="text-xs text-gray-400 mt-6 italic">
+                سيتم تكييف شروط ومتطلبات اجتياز الامتحان بناءً على هذا الاختيار.
+            </p>
+        </div>
+    </div>
+    
+    <div class="container mx-auto max-w-4xl p-2 sm:p-4 md:p-8">
+        
+        <!-- Header Container (Improved Styling) -->
+        <header class="text-center mb-6 pb-3 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-blue-100 shadow-xl border border-blue-200">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800">مستشفى الجامعة الأردنية</h1>
+            <p class="text-lg sm:text-xl text-gray-600 mt-1 mb-3">مكتب التعليم والتدريب والتطوير</p>
+            
+            <div class="border-t border-blue-300 pt-3 sm:pt-4">
+                <h2 class="text-xl md:text-3xl font-bold text-gray-800">
+                    الشروط الإلزامية للتدرب في المستشفى
+                </h2>
+                <p class="text-center text-gray-700 mt-2 font-semibold p-1.5 sm:p-2 bg-blue-200 rounded-lg inline-block text-sm sm:text-base">
+                    يرجى مراجعة الشروط الضرورية التالية وإكمال المتطلبات لبدء تدريبك.
+                </p>
+            </div>
+        </header>
+
+        <main class="bg-white rounded-2xl shadow-xl overflow-hidden mt-0 p-4 md:p-10">
+            
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 border-b-2 pb-2">المتطلبات الأساسية والوثائق (تسلسل إلزامي)</h3>
+
+            <!-- 1. Confidentiality - START (Rule 1) -->
+            <section id="section-confidentiality" class="mb-10 p-4 sm:p-6 bg-red-100 rounded-xl border-l-8 border-red-500 shadow-md">
+                <h4 class="text-xl md:text-2xl font-bold text-red-700 mb-3 flex items-center">
+                    <span class="ml-2 bg-red-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-sm">1</span> التعهد بالسرية وخصوصية المعلومات
+                </h4>
+                <div class="flex items-start">
+                    <div class="text-4xl sm:text-6xl ml-4 sm:ml-5 text-red-600 flex-shrink-0">⚠️</div>
+                    <div class="flex-1">
+                        <p class="text-lg sm:text-xl font-extrabold mb-2 leading-snug text-gray-900">
+                            التزام السرية المطلق (شرط إلزامي)
+                        </p>
+                        <p class="text-base sm:text-lg leading-relaxed mb-1 text-gray-800">
+                            يتعهد المتدرب بالمحافظة على **سرية وخصوصية جميع المعلومات** في مستشفى الجامعة الأردنية.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 mt-1 mr-4 text-sm sm:text-base">
+                            <li>يشمل ذلك معلومات المرضى، الموظفين، العمل أو الأنظمة.</li>
+                            <li>المعلومات تشمل الوثائق، المحادثات، والبيانات المحوسبة.</li>
+                        </ul>
+                        <p class="text-xs sm:text-sm text-red-600 mt-2 italic font-semibold">
+                            سيُعتبر المتدرب مُقرّاً بالمحافظة على سريتها وخصوصيتها حال اطلاعه على هذه الشروط.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- 1. Confidentiality - END -->
+
+            <div class="border-t-4 border-dashed border-gray-300 my-8"></div>
+            
+            <!-- 2. Medical Tests - START (Rule 3) -->
+            <section id="section-medical" class="mb-10 p-4 sm:p-6 bg-red-50 rounded-xl border-l-8 border-red-500 shadow-sm">
+                <h4 class="text-xl md:text-2xl font-bold text-red-700 mb-3 flex items-center">
+                    <span class="text-2xl sm:text-3xl ml-2 bg-red-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-sm">2</span> الفحوصات المخبرية (للتخصصات ذات الصلة)
+                </h4>
+                
+                <div class="bg-red-100 p-3 rounded-md mb-3">
+                    <p class="font-bold text-red-800 text-sm sm:text-base">
+                        تنبيه هام: هذا الشرط خاص فقط بالمتدربين في التخصصات الطبية، الصحية، والتغذية.
+                    </p>
+                </div>
+
+                <p class="text-base sm:text-lg leading-relaxed mb-3 text-gray-800">
+                    يجب عليك إجراء الفحوصات المخبرية التالية **على نفقتك الخاصة**:
+                </p>
+                <ul class="list-disc list-inside bg-white p-3 rounded-lg space-y-1 text-gray-700 font-mono text-base sm:text-lg border">
+                    <li>HBs Ag</li>
+                    <li>HCV Ab</li>
+                    <li>HIV Ab</li>
+                </ul>
+                <p class="text-base sm:text-lg leading-relaxed mt-3 text-gray-800">
+                    يجب عرض نتائج هذه الفحوصات على **مكتب ضبط العدوى في مستشفى الجامعة الأردنية** والحصول على توصيتها **قبل** مباشرتك للتدريب.
+                </p>
+            </section>
+            <!-- 2. Medical Tests - END -->
+
+            <div class="border-t-4 border-dashed border-gray-300 my-8"></div>
+            
+            <!-- 3. Financial Fees - START (Rule 4) -->
+            <section id="section-financial" class="mb-10 p-4 sm:p-6 bg-green-50 rounded-xl border-l-8 border-green-500 shadow-sm">
+                 <h4 class="text-xl md:text-2xl font-bold text-green-700 mb-3 flex items-center">
+                    <span class="text-2xl sm:text-3xl ml-2 bg-green-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-sm">3</span> رسوم التدريب (إن وجدت)
+                </h4>
+                <div class="flex items-start">
+                    <div class="flex-1">
+                        <p class="text-base sm:text-lg leading-relaxed text-gray-800">
+                            في حال كان التدريب الذي تتقدم له يتطلب دفع رسوم:
+                        </p>
+                        <p class="text-base sm:text-lg leading-relaxed mt-2 font-semibold bg-green-100 p-2 rounded-md inline-block">
+                            يشترط تزويدنا بوصل مالي يفيد استيفاء الرسوم كاملة **قبل** مباشرة التدريب.
+                        </p>
+                        <p class="text-xs sm:text-sm text-green-700 mt-2 italic font-medium">
+                            * ملاحظة: هذا الشرط ينطبق على **الجامعات الخاصة**، **التدريب الشخصي**، و **المتدربين القادمين من مركز الاستشارات الجامعة الأردنية**.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- 3. Financial Fees - END -->
+
+            <!-- Final Submission Instruction (Unified) -->
+            <div id="final-submission-summary" class="mt-6 p-4 sm:p-6 bg-yellow-100 rounded-xl border-2 border-yellow-500 shadow-md mb-10">
+                <p class="font-bold text-xl sm:text-2xl text-yellow-800 mb-3 flex items-center">
+                    ✅ ملخص التسليم النهائي للوثائق
+                </p>
+                <p class="text-base sm:text-xl font-semibold mb-2 text-gray-900">
+                    بعد إكمال المتطلبات، يجب إحضار الوثائق التالية:
+                </p>
+                <ul class="list-disc list-inside text-gray-800 space-y-1.5 text-sm sm:text-lg mr-4">
+                    <li><span class="font-semibold">نسخة من تقرير الفحص</span> بعد ختمه من **مكتب ضبط العدوى** (إذا انطبق عليك البند 2).</li>
+                    <li><span class="font-semibold">الوصل المالي</span> (إذا انطبق عليك البند 3).</li>
+                </ul>
+                <p class="text-base sm:text-xl font-extrabold p-2 sm:p-3 bg-yellow-200 rounded-md text-center mt-4 text-gray-900">
+                    يجب تسليم هذه الوثائق إلى **مكتب التعليم والتدريب والتطوير في مبنى الجاما نايف**.
+                </p>
+            </div>
+
+            <div class="border-t-4 border-dashed border-gray-300 my-8"></div>
+            
+            <!-- 4. Orientation & Exam - START (Rule 2) -->
+            <section id="section-orientation" class="mb-10 p-4 sm:p-6 bg-blue-50 rounded-xl border-l-8 border-blue-500 shadow-md">
+                <h4 class="text-xl md:text-2xl font-bold text-blue-700 mb-3 flex items-center">
+                    <span class="ml-2 bg-blue-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-sm">4</span> البرنامج التعريفي العام (ومرحلة الاختبار)
+                </h4>
+
+                <div class="flex flex-col md:flex-row items-start">
+                    <div class="text-4xl sm:text-5xl mb-3 md:mb-0 md:ml-4 flex-shrink-0 text-blue-600">📚</div>
+                    <div class="flex-1">
+                        <p id="orientation-header" class="text-base sm:text-xl font-extrabold mb-3 leading-relaxed p-2 bg-blue-100 rounded-md border-b-4 border-blue-400 text-gray-900">
+                           لإتمام شروط التدريب، يجب عليك **قراءة المواد الإلزامية** التالية، ومن ثم اجتياز الاختبار النظري.
+                        </p>
+                        
+                        <p class="text-sm sm:text-base font-bold mb-2 text-gray-700">
+                            للانتقال إلى الاختبار، يرجى مراجعة وتأكيد قراءة المواد:
+                        </p>
+                        <ul class="space-y-3 p-3 rounded-lg shadow-inner border border-blue-200">
+                            
+                            <!-- Course Item 1: Quality (Updated Link Here) -->
+                            <li id="item-quality" class="flex items-center justify-between p-2 rounded-lg bg-gray-100 border-r-4 border-gray-300 transition duration-300 shadow-sm hover:shadow-md">
+                                <div class="flex items-center text-sm sm:text-lg text-gray-800 font-medium cursor-default">
+                                    <span id="status-quality" class="ml-2 text-red-500 font-extrabold text-xl">🚫</span>
+                                    <span>محاضرة مكتب الجودة</span>
+                                </div>
+                                <a id="link-quality" href="https://drive.google.com/file/d/1lc1NjUaSYyCzQhQURZKywfCBWzTqFWHs/view?usp=sharing" target="_blank" 
+                                   class="text-blue-600 hover:text-blue-800 hover:underline transition text-xs sm:text-sm flex items-center px-2 py-1 bg-blue-50 rounded-full font-semibold" 
+                                   onclick="markAsRead('quality', event)">
+                                    <span class="ml-1">عرض المحاضرة</span> 🔗
+                                </a>
+                            </li>
+                            
+                            <!-- Course Item 2: Infection -->
+                            <li id="item-infection" class="flex items-center justify-between p-2 rounded-lg bg-gray-100 border-r-4 border-gray-300 transition duration-300 shadow-sm hover:shadow-md">
+                                <div class="flex items-center text-sm sm:text-lg text-gray-800 font-medium cursor-default">
+                                    <span id="status-infection" class="ml-2 text-red-500 font-extrabold text-xl">🚫</span>
+                                    <span>محاضرة مكتب ضبط العدوى</span>
+                                </div>
+                                <a id="link-infection" href="https://drive.google.com/file/d/1c6mhi1X4UG14r4mVcdNQ4L5yYEGyzxUW/view?usp=sharing" target="_blank" 
+                                   class="text-blue-600 hover:text-blue-800 hover:underline transition text-xs sm:text-sm flex items-center px-2 py-1 bg-blue-50 rounded-full font-semibold" 
+                                   onclick="markAsRead('infection', event)">
+                                    <span class="ml-1">عرض المحاضرة</span> 🔗
+                                </a>
+                            </li>
+                            
+                            <!-- Course Item 3: Safety -->
+                            <li id="item-safety" class="flex items-center justify-between p-2 rounded-lg bg-gray-100 border-r-4 border-gray-300 transition duration-300 shadow-sm hover:shadow-md">
+                                <div class="flex items-center text-sm sm:text-lg text-gray-800 font-medium cursor-default">
+                                    <span id="status-safety" class="ml-2 text-red-500 font-extrabold text-xl">🚫</span>
+                                    <span>محاضرة مكتب السلامة العامة</span>
+                                </div>
+                                <a id="link-safety" href="https://drive.google.com/file/d/1eI6m9wHvDbGEMa9U_QnaIw_5ydcHDHWw/view?usp=drive_link" target="_blank" 
+                                   class="text-blue-600 hover:text-blue-800 hover:underline transition text-xs sm:text-sm flex items-center px-2 py-1 bg-blue-50 rounded-full font-semibold" 
+                                   onclick="markAsRead('safety', event)">
+                                    <span class="ml-1">عرض المحاضرة</span> 🔗
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Exam Section (State controlled by JS) -->
+                        <div id="exam-section" class="mt-5 p-4 sm:p-6 border-2 border-dashed rounded-lg text-center transition-colors duration-300">
+                            <p id="readiness-message" class="text-base sm:text-xl font-bold mb-3">
+                                ⛔ الرجاء مراجعة وتأكيد قراءة جميع المواد (عبر النقر على رابط "عرض المحاضرة") للانتقال إلى الاختبار.
+                            </p>
+                            
+                            <!-- هذا النص سيظهر فقط للمتدربين الخارجيين -->
+                            <div id="exam-details">
+                                <p class="text-sm sm:text-lg text-red-600 font-extrabold mb-3 p-1.5 sm:p-2 bg-red-100 inline-block rounded-md shadow-sm">
+                                    ملاحظة: علامة النجاح المطلوبة هي 18 من 20.
+                                </p>
+                                <a id="exam-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdrO0Wg-9uIhAx5-88vFFtys8f4NDpaGcDXjkV6vRBBzsj7NA/viewform" target="_blank" class="inline-block px-6 py-2 sm:px-8 sm:py-3 bg-gray-400 text-white font-bold rounded-full shadow-lg transition transform text-sm sm:text-base" onclick="return checkExamAccess(event)">
+                                    انتقل إلى الاختبار النظري ➡️
+                                </a>
+                            </div>
+
+                            <!-- هذا النص سيظهر لمتدربي الجامعة الأردنية بدلاً من زر الامتحان -->
+                            <div id="ju-trainee-message" class="hidden text-green-700 font-bold text-base sm:text-xl bg-green-100 p-3 rounded-lg border-2 border-green-400">
+                                أنت غير مطالب بالتقدم للاختبار، يكفيك الاطلاع على المواد.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 4. Orientation & Exam - END -->
+
+
+        </main>
+
+        <footer class="text-center mt-6 text-xs sm:text-sm text-gray-500 p-2">
+            <p>تم تحويل هذه الصفحة إلى تطبيق تفاعلي لغايات التوضيح وتسهيل الوصول للمعلومات.</p>
+            <p>&copy; 2025 مستشفى الجامعة الأردنية. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script>
+        // حالة قراءة المحاضرات
+        let readStatus = {
+            'quality': false,
+            'infection': false,
+            'safety': false
+        };
+
+        // حالة نوع المتدرب: true لمتدرب الجامعة الأردنية (للاطلاع فقط)، false لمتدرب خارجي (ملزم بالامتحان)
+        let isJuTrainee = false; 
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // تحديث العرض الأولي بناءً على الحالة الافتراضية
+            updateCourseDisplay('quality');
+            updateCourseDisplay('infection');
+            updateCourseDisplay('safety');
+            checkReadiness(); 
+        });
+
+        // دالة تحديد نوع المتدرب وإخفاء شاشة البداية
+        window.setTraineeType = function(isJu) {
+            isJuTrainee = isJu;
+            
+            // تحديث الرسالة الرئيسية
+            const orientationHeader = document.getElementById('orientation-header');
+            if (isJuTrainee) {
+                orientationHeader.innerHTML = 'لإتمام شروط التدريب، يجب عليك **قراءة المواد الإلزامية** التالية (غير مطالب بالامتحان).';
+            } else {
+                orientationHeader.innerHTML = 'لإتمام شروط التدريب، يجب عليك **قراءة المواد الإلزامية** التالية، ومن ثم اجتياز الاختبار النظري.';
+            }
+
+            // إخفاء شاشة البداية
+            const welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.classList.add('opacity-0');
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+            }, 500);
+
+            // تحديث حالة الاستعداد (مهم جداً لتطبيق شروط الامتحان)
+            checkReadiness(); 
+        }
+
+        // دالة تطبيق وإزالة تأثير الوميض لمرة واحدة
+        window.pulseElement = function(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.remove('animate-pulse-once'); // إزالة الحركة السابقة إن وجدت
+                void element.offsetWidth; // إعادة تدفق (Reflow) لإعادة تشغيل الحركة
+                element.classList.add('animate-pulse-once');
+            }
+        };
+
+        // دالة لتحديث حالة القراءة بصرياً ومنطقياً
+        window.markAsRead = function(courseId, event) {
+            pulseElement('item-' + courseId);
+            
+            if (!readStatus[courseId]) {
+                readStatus[courseId] = true;
+                updateCourseDisplay(courseId);
+                checkReadiness();
+            }
+        };
+
+        // دالة لتحديث العرض البصري لعنصر الدورة (تغيير اللون والأيقونة)
+        window.updateCourseDisplay = function(courseId) {
+            const item = document.getElementById('item-' + courseId);
+            const status = document.getElementById('status-' + courseId);
+            
+            if (readStatus[courseId]) {
+                // حالة مقروء (لون أزرق)
+                item.classList.add('bg-blue-100', 'border-blue-500');
+                item.classList.remove('bg-gray-100', 'border-gray-300');
+                status.textContent = '✅';
+                status.classList.remove('text-red-500');
+                status.classList.add('text-green-600');
+            } else {
+                // حالة غير مقروء (لون رمادي/افتراضي)
+                item.classList.add('bg-gray-100', 'border-gray-300');
+                item.classList.remove('bg-blue-100', 'border-blue-500');
+                status.textContent = '🚫';
+                status.classList.remove('text-green-600');
+                status.classList.add('text-red-500');
+            }
+        }
+
+
+        // دالة التحقق من الاستعداد للاختبار وتعديل زر الامتحان
+        window.checkReadiness = function() {
+            const allRead = readStatus.quality && readStatus.infection && readStatus.safety;
+            const examSection = document.getElementById('exam-section');
+            const examLinkDetails = document.getElementById('exam-details');
+            const juMessage = document.getElementById('ju-trainee-message');
+            const examLink = document.getElementById('exam-link');
+            const messageElement = document.getElementById('readiness-message');
+
+            // 1. تحديد ما إذا كان الامتحان مرئياً أو مخفياً بناءً على نوع المتدرب
+            if (isJuTrainee) {
+                examLinkDetails.classList.add('hidden');
+                juMessage.classList.remove('hidden');
+                
+                // لمتدربي الجامعة، يكفي إكمال القراءة لتغيير رسالة الاستعداد
+                if (allRead) {
+                    messageElement.textContent = '✅ تهانينا! لقد أكملت مراجعة جميع المواد الإلزامية بنجاح.';
+                    examSection.classList.add('border-green-400', 'bg-green-50');
+                    examSection.classList.remove('border-red-400', 'bg-red-50');
+                } else {
+                    messageElement.textContent = 'الرجاء مراجعة وتأكيد قراءة جميع المواد (عبر النقر على رابط "عرض المحاضرة").';
+                    examSection.classList.remove('border-green-400', 'bg-green-50');
+                    examSection.classList.add('border-red-400', 'bg-red-50');
+                }
+
+            } else {
+                // المتدرب الخارجي (ملزم بالامتحان)
+                examLinkDetails.classList.remove('hidden');
+                juMessage.classList.add('hidden');
+                
+                if (allRead) {
+                    // جاهز للامتحان
+                    messageElement.textContent = '✅ تهانينا! لقد أكملت مراجعة المواد، يمكنك الآن الانتقال إلى الاختبار النظري.';
+                    examSection.classList.add('border-green-400', 'bg-green-50');
+                    examSection.classList.remove('border-red-400', 'bg-red-50');
+                    examLink.classList.remove('bg-gray-400', 'cursor-not-allowed', 'opacity-60');
+                    examLink.classList.add('bg-green-600', 'hover:bg-green-700', 'shadow-lg');
+                    examLink.style.pointerEvents = 'auto'; // تفعيل رابط النقر
+                } else {
+                    // غير جاهز للامتحان
+                    messageElement.textContent = '⛔ الرجاء مراجعة وتأكيد قراءة جميع المواد (عبر النقر على رابط "عرض المحاضرة") للانتقال إلى الاختبار.';
+                    examSection.classList.add('border-red-400', 'bg-red-50');
+                    examSection.classList.remove('border-green-400', 'bg-green-50');
+                    examLink.classList.add('bg-gray-400', 'cursor-not-allowed', 'opacity-60');
+                    examLink.classList.remove('bg-green-600', 'hover:bg-green-700', 'shadow-lg');
+                    examLink.style.pointerEvents = 'none'; // تعطيل رابط النقر
+                }
+            }
+        }
+
+        // دالة منع الوصول للاختبار في حال محاولة التجاوز (فقط للمتدربين الخارجيين)
+        window.checkExamAccess = function(event) {
+            const allRead = readStatus.quality && readStatus.infection && readStatus.safety;
+
+            // إذا كان متدرب خارجي وغير مستعد، نمنع الانتقال
+            if (!isJuTrainee && !allRead) {
+                // منع الانتقال الافتراضي
+                event.preventDefault(); 
+                
+                // عرض رسالة مخصصة (ممنوع استخدام alert())
+                const messageElement = document.getElementById('readiness-message');
+                messageElement.textContent = 'يجب عليك تأكيد قراءة جميع المواد الإلزامية قبل التمكن من الانتقال إلى رابط الاختبار.';
+                
+                // إضافة تأثير بصري للتنبيه
+                const examSection = document.getElementById('exam-section');
+                examSection.classList.add('animate-pulse');
+                setTimeout(() => {
+                    examSection.classList.remove('animate-pulse');
+                    window.checkReadiness(); 
+                }, 1000);
+                
+                return false;
+            }
+            // إذا كان متدرب خارجي ومستعد، أو متدرب من الجامعة (الزر يكون مخفياً أصلاً)، نتيح الانتقال (هذا الإرجاع لن يحدث عملياً لمتدربي الجامعة)
+            return true;
+        }
+    </script>
+
+</body>
+</html>
